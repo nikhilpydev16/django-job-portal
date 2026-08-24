@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="dashboard-header">
+    <h1>Welcome, {{ user.username }}</h1>
+    <p>Manage your jobs and applications from one place.</p>
+</div>
+
+<div class="dashboard-grid">
+
+    <div class="dashboard-card">
+        <h2>{{ total_jobs }}</h2>
+        <p>Total Jobs</p>
+    </div>
+
+    <div class="dashboard-card">
+        <h2>{{ my_posted_jobs }}</h2>
+        <p>My Posted Jobs</p>
+    </div>
+
+    <div class="dashboard-card">
+        <h2>{{ total_applications }}</h2>
+        <p>Total Applications</p>
+    </div>
+
+    <div class="dashboard-card">
+        <h2>{{ open_jobs }}</h2>
+        <p>Open Jobs</p>
+    </div>
+
+    <div class="dashboard-card">
+        <h2>{{ closed_jobs }}</h2>
+        <p>Closed Jobs</p>
+    </div>
+
+    <div class="dashboard-card">
+        <h2>{{ saved_jobs_count }}</h2>
+        <p>Saved Jobs</p>
+    </div>
+
+</div>
+
+<hr>
+
+<h2>Job Status Chart</h2>
+
+<div style="width:400px;">
+    <canvas id="jobStatusChart"></canvas>
+</div>
+
+<div class="dashboard-actions">
+    <a href="{% url 'job_list' %}">Find Jobs</a>
+    <a href="{% url 'post_job' %}">Post Job</a>
+    <a href="{% url 'my_posted_jobs' %}">My Jobs</a>
+    <a href="{% url 'my_applications' %}">Applications</a>
+</div>
+
+<hr>
+
+<div class="recent-jobs-section">
+    <h2>Recent Jobs</h2>
+
+    {% for job in recent_jobs %}
+        <div class="recent-job-card">
+            <h3>{{ job.title }}</h3>
+            <p><strong>Company:</strong> {{ job.company }}</p>
+            <p><strong>Status:</strong> {{ job.status }}</p>
+            <p><strong>Location:</strong> {{ job.location }}</p>
+        </div>
+    {% empty %}
+        <p>No jobs posted yet.</p>
+    {% endfor %}
+</div>
+
+<hr>
+
+<div class="recent-applicants-section">
+    <h2>Recent Applicants</h2>
+
+    {% for app in recent_applications %}
+        <div class="recent-job-card">
+            <h3>{{ app.candidate.username }}</h3>
+            <p><strong>Applied For:</strong> {{ app.job.title }}</p>
+            <p><strong>Status:</strong> {{ app.status }}</p>
+            <p><strong>Applied Date:</strong> {{ app.applied_date }}</p>
+
+            <a href="{% url 'candidate_profile' app.candidate.id %}">
+                View Profile
+            </a>
+        </div>
+        <br>
+    {% empty %}
+        <p>No recent applicants yet.</p>
+    {% endfor %}
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const openJobs = Number("{{ open_jobs|default:0 }}");
+    const closedJobs = Number("{{ closed_jobs|default:0 }}");
+
+    const ctx = document.getElementById('jobStatusChart');
+
+    if (ctx) {
+        new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Open Jobs', 'Closed Jobs'],
+                datasets: [{
+                    data: [openJobs, closedJobs]
+                }]
+            }
+        });
+    }
+</script>
+
+{% endblock %}

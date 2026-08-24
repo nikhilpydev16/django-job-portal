@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="post-job-wrapper">
+    <div class="post-job-info">
+        <h1>Post a New Job</h1>
+        <p>Reach talented candidates and manage applications easily.</p>
+
+        <ul>
+            <li>✔ Add job title and company details</li>
+            <li>✔ Mention salary and required skills</li>
+            <li>✔ Track applications from candidates</li>
+        </ul>
+    </div>
+
+    <div class="post-job-form">
+        <h2>Job Details</h2>
+
+        <form method="POST" enctype="multipart/form-data"
+            {% csrf_token %}
+
+            <input type="text" name="title" placeholder="Job Title" required>
+            <input type="text" name="company" placeholder="Company Name" required>
+            <input type="text" name="location" placeholder="Job Location" required>
+            <input type="text" name="salary" placeholder="Salary Package" required>
+            <input type="text" name="skills_required" placeholder="Required Skills" required>
+            <input type="file" name="company_logo">
+            <textarea name="description" placeholder="Job Description" required></textarea>
+
+            <button type="submit">Post Job</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

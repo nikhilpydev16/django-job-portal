@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="application-header">
+    <h1>My Applications</h1>
+    <p>Track all jobs you have applied for.</p>
+</div>
+
+<div class="application-list">
+    {% for application in applications %}
+        <div class="application-card">
+            <div>
+                <h3>{{ application.job.title }}</h3>
+                <p>{{ application.job.company }} · {{ application.job.location }}</p>
+            </div>
+
+            <div class="application-status">
+                {{ application.status }}
+            </div>
+
+            <div>
+                <p><strong>Applied On:</strong></p>
+                <p>{{ application.applied_date }}</p>
+            </div>
+        </div>
+    {% empty %}
+        <div class="empty-box">
+            <h3>No Applications Yet</h3>
+            <p>You have not applied for any job.</p>
+            <a href="{% url 'job_list' %}">Browse Jobs</a>
+        </div>
+    
+        <h2>Applicants for {{ job.title }}</h2>
+
+<div>
+    <a href="?status=Applied">Applied</a>
+    <a href="?status=Shortlisted">Shortlisted</a>
+    <a href="?status=Selected">Selected</a>
+    <a href="?status=Rejected">Rejected</a>
+</div>
+
+<br>
+    {% endfor %}
+</div>
+
+{% endblock %}

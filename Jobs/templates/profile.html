@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="profile-header">
+    <h1>My Profile</h1>
+    <p>View your account and profile details.</p>
+</div>
+
+<div class="profile-card">
+    {% if candidate_profile and candidate_profile.profile_photo %}
+    <img src="{{ candidate_profile.profile_photo.url }}" class="profile-photo">
+{% elif recruiter_profile and recruiter_profile.profile_photo %}
+    <img src="{{ recruiter_profile.profile_photo.url }}" class="profile-photo">
+{% else %}
+    <div class="profile-avatar">
+        {{ user.username|first|upper }}
+    </div>
+{% endif %}
+
+    <h2>{{ user.username }}</h2>
+    <p>{{ user.email }}</p>
+
+    {% if candidate_profile %}
+        <div class="profile-info">
+            <p><strong>Role:</strong> Candidate</p>
+            <p><strong>Phone:</strong> {{ candidate_profile.phone }}</p>
+            <p><strong>Qualification:</strong> {{ candidate_profile.qualification }}</p>
+            <p><strong>Skills:</strong> {{ candidate_profile.skills }}</p>
+
+            {% if candidate_profile.resume %}
+                <p>
+                    <strong>Resume:</strong>
+                    <a href="{{ candidate_profile.resume.url }}" target="_blank">View Resume</a>
+                </p>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    {% if recruiter_profile %}
+        <div class="profile-info">
+            <p><strong>Role:</strong> Recruiter</p>
+            <p><strong>Company:</strong> {{ recruiter_profile.company_name }}</p>
+            <p><strong>Phone:</strong> {{ recruiter_profile.phone }}</p>
+            <p><strong>Location:</strong> {{ recruiter_profile.company_location }}</p>
+        </div>
+    {% endif %}
+    <a href="{% url 'edit_profile' %}" class="profile-edit-btn">
+    Edit Profile
+</a>
+</div>
+
+{% endblock %}

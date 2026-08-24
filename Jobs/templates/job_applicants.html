@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<a href="{% url 'export_applicants_excel' job.id %}">
+    Download Excel
+</a>
+
+<div class="application-header">
+    <h1>Applicants for {{ job.title }}</h1>
+    <p>{{ job.company }} · {{ job.location }}</p>
+</div>
+
+<div class="application-list">
+    {% for application in applications %}
+        <div class="application-card">
+            <div>
+                <h3>{{ application.candidate.username }}</h3>
+                <p>{{ application.candidate.email }}</p>
+            </div>
+
+            <div class="application-status">
+                <p><strong>Status:</strong> {{ application.status }}</p>
+                <form method="POST" action="{% url 'update_application_status' application.id %}">
+                    {% csrf_token %}
+
+                        <select name="status">
+                             <option value="Applied" {% if application.status == "Applied" %}selected{% endif %}>Applied</option>
+                             <option value="Shortlisted" {% if application.status == "Shortlisted" %}selected{% endif %}>Shortlisted</option>
+                             <option value="Rejected" {% if application.status == "Rejected" %}selected{% endif %}>Rejected</option>
+                             <option value="Selected" {% if application.status == "Selected" %}selected{% endif %}>Selected</option>
+                        </select>
+
+                         <button type="submit">Update</button>
+                </form>
+            </div>
+        
+
+            <div>
+                <p><strong>Applied On:</strong></p>
+                <p>{{ application.applied_date }}</p>
+
+                {% if application.candidate.candidateprofile.resume %}
+                    <a href="{{ application.candidate.candidateprofile.resume.url }}" target="_blank" class="resume-btn">
+                       <a href="{% url 'candidate_profile' application.candidate.id % }class="apply-btn">
+
+                        View Profile
+
+                       </a>
+
+                        View Resume
+                    </a>
+                {% else %}
+                    <span>No Resume</span>
+                {% endif %}
+            </div>
+        </div>
+    {% empty %}
+        <div class="empty-box">
+            <h3>No Applicants Yet</h3>
+            <p>No candidate has applied for this job yet.</p>
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

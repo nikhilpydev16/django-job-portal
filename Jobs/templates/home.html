@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="hero-section">
+    <div class="hero-content">
+        <h1>Find the Right Job for Your Future</h1>
+        <p>Search thousands of jobs and connect with top recruiters easily.</p>
+
+        <form class="hero-search" method="GET" action="{% url 'job_list' %}">
+            <input type="text" name="search" placeholder="Search job title, skills or company">
+            <button type="submit">Search Jobs</button>
+        </form>
+    </div>
+</section>
+
+<section class="stats-section">
+    <div class="stat-box">
+        <h2>5000+</h2>
+        <p>Active Jobs</p>
+    </div>
+
+    <div class="stat-box">
+        <h2>1200+</h2>
+        <p>Companies</p>
+    </div>
+
+    <div class="stat-box">
+        <h2>8000+</h2>
+        <p>Candidates</p>
+    </div>
+</section>
+
+<section class="category-section">
+    <h2>Popular Job Categories</h2>
+
+    <div class="category-grid">
+        <div class="category-card">Python Developer</div>
+        <div class="category-card">Django Developer</div>
+        <div class="category-card">Frontend Developer</div>
+        <div class="category-card">SQL Developer</div>
+    </div>
+</section>
+
+<section class="featured-section">
+    <h2>Featured Jobs</h2>
+
+    <div class="featured-grid">
+        <div class="featured-card">
+            <h3>Python Developer</h3>
+            <p>TCS · Pune</p>
+            <span>₹3 - 5 LPA</span>
+            <a href="{% url 'job_list' %}">View Job</a>
+        </div>
+
+        <div class="featured-card">
+            <h3>Django Developer</h3>
+            <p>Infosys · Bangalore</p>
+            <span>₹4 - 6 LPA</span>
+            <a href="{% url 'job_list' %}">View Job</a>
+        </div>
+
+        <div class="featured-card">
+            <h3>SQL Developer</h3>
+            <p>Wipro · Hyderabad</p>
+            <span>₹3 - 4.5 LPA</span>
+            <a href="{% url 'job_list' %}">View Job</a>
+        </div>
+    </div>
+</section>
+
+<section class="companies-section">
+    <h2>Top Companies Hiring</h2>
+
+    <div class="company-grid">
+        <div class="company-card">TCS</div>
+        <div class="company-card">Infosys</div>
+        <div class="company-card">Wipro</div>
+        <div class="company-card">Accenture</div>
+        <div class="company-card">Capgemini</div>
+    </div>
+</section>
+
+{% endblock %}
+

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="job-header">
+    <h1>My Posted Jobs</h1>
+    <p>Manage all jobs posted by you.</p>
+</div>
+
+<div class="jobs-grid">
+    {% for job in jobs %}
+        <div class="job-card">
+            <h3>{{ job.title }}</h3>
+
+            <p><strong>Company:</strong> {{ job.company }}</p>
+            <p><strong>Location:</strong> {{ job.location }}</p>
+            <p><strong>Salary:</strong> {{ job.salary }}</p>
+            <p><strong>Skills:</strong> {{ job.skills_required }}</p>
+            <p>{{ job.description }}</p>
+
+            <a href="{% url 'job_applicants' job.id %}" class="apply-btn">
+                View Applications
+            <a href="{% url 'edit_job' job.id %}" class="edit-btn">Edit</a>
+
+            <a href="{% url 'delete_job' job.id %}" class="delete-btn">Delete</a>
+            </a>
+
+        </div>
+    {% empty %}
+        <div class="empty-box">
+            <h3>No Jobs Posted Yet</h3>
+            <p>You have not posted any job.</p>
+
+            <a href="{% url 'post_job' %}">
+                Post Your First Job
+            </a>
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

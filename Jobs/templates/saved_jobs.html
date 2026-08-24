@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="job-header">
+    <h1>Saved Jobs</h1>
+    <p>Jobs you saved for later.</p>
+</div>
+
+<div class="jobs-grid">
+    {% for saved in saved_jobs %}
+        <div class="job-card">
+            <h3>{{ saved.job.title }}</h3>
+            <p><strong>Company:</strong> {{ saved.job.company }}</p>
+            <p><strong>Location:</strong> {{ saved.job.location }}</p>
+            <p><strong>Salary:</strong> {{ saved.job.salary }}</p>
+
+            <a href="{% url 'apply_job' saved.job.id %}" class="apply-btn">Apply Now</a>
+        </div>
+    {% empty %}
+        <div class="empty-box">
+            <h3>No Saved Jobs</h3>
+            <p>You have not saved any job yet.</p>
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

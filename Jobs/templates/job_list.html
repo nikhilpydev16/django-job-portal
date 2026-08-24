@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="job-header">
+    <h1>Available Jobs</h1>
+    <p>Find your dream job today.</p>
+</div>
+
+<form method="GET" class="job-search-box">
+    <input type="text" name="search" placeholder="Job Title">
+    <input type="text" name="location" placeholder="Location">
+    <input type="text" name="skills" placeholder="Skills">
+
+    <button type="submit">Search</button>
+</form>
+
+<div class="jobs-grid">
+
+```
+{% for job in jobs %}
+
+<div class="job-card professional-job-card">
+
+    <div class="job-card-header">
+
+        {% if job.company_logo %}
+            <img src="{{ job.company_logo.url }}" class="company-logo">
+        {% else %}
+            <div class="company-logo-placeholder">
+                {{ job.company|first|upper }}
+            </div>
+        {% endif %}
+
+        <div>
+            <h3>{{ job.title }}</h3>
+            <p>{{ job.company }}</p>
+        </div>
+
+    </div>
+
+    <div class="job-badges">
+        <span>📍 {{ job.location }}</span>
+        <span>💰 {{ job.salary }}</span>
+        <span>🟢 {{ job.status }}</span>
+    </div>
+
+    <p class="job-skills">
+        <strong>Skills:</strong> {{ job.skills_required }}
+    </p>
+
+    <p class="job-desc">
+        {{ job.description }}
+    </p>
+
+    <div class="job-actions">
+
+
+        
+     {% if job.id in applied_job_ids %}
+            <button disabled>Already Applied</button>
+     {% elif job.status == "Open" %}
+            <a href="{% url 'apply_job' job.id %}">Apply</a>
+     {% else %} 
+            <button disabled>Closed</button>    
+     {% endif %}
+
+        {% if job.id in saved_job_ids %}
+            <a href="{% url 'toggle_save_job' job.id %}">
+             ❤️ Saved
+            </a>
+        {% else %}
+           <a href="{% url 'toggle_save_job' job.id %}">
+         ♡ Save Job
+          </a>
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% empty %}
+
+<div class="empty-box">
+    <h3>No Jobs Found</h3>
+    <p>No jobs available at the moment.</p>
+</div>
+<div class="pagination">
+
+    {% if jobs.has_previous %}
+        <a href="?page={{ jobs.previous_page_number }}&search={{ request.GET.search }}&location={{ request.GET.location }}&skills={{ request.GET.skills }}">
+            Previous
+        </a>
+    {% endif %}
+
+    <span>
+        Page {{ jobs.number }} of {{ jobs.paginator.num_pages }}
+    </span>
+
+    {% if jobs.has_next %}
+        <a href="?page={{ jobs.next_page_number }}&search={{ request.GET.search }}&location={{ request.GET.location }}&skills={{ request.GET.skills }}">
+            Next
+        </a>
+    {% endif %}
+
+</div>
+
+{% endfor %}
+```
+
+</div>
+
+{% endblock %}

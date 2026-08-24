@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Candidate Profile</h2>
+
+<div class="profile-card">
+
+    {% if profile.profile_photo %}
+        <img src="{{ profile.profile_photo.url }}" width="120" height="120">
+    {% endif %}
+
+    <h3>{{ candidate.username }}</h3>
+
+    <p><strong>Email:</strong> {{ candidate.email }}</p>
+    <p><strong>Phone:</strong> {{ profile.phone }}</p>
+    <p><strong>Qualification:</strong> {{ profile.qualification }}</p>
+    <p><strong>Skills:</strong> {{ profile.skills }}</p>
+
+    {% if profile.resume %}
+        <a href="{{ profile.resume.url }}" target="_blank">
+            View / Download Resume
+        </a>
+    {% else %}
+        <p>No resume uploaded.</p>
+    {% endif %}
+
+</div>
+
+{% endblock %}

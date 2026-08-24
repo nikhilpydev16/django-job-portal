@@ -1,0 +1,74 @@
+<h1 style="color:red;">TEST RECRUITER DASHBOARD</h1>
+<h2>Recruiter Dashboard</h2>
+
+<div style="display:flex; gap:20px; flex-wrap:wrap;">
+
+    <div style="border:1px solid #ddd; padding:20px;">
+        <h3>Total Jobs</h3>
+        <p>{{ total_jobs }}</p>
+    </div>
+
+    <div style="border:1px solid #ddd; padding:20px;">
+        <h3>Open Jobs</h3>
+        <p>{{ open_jobs }}</p>
+    </div>
+
+    <div style="border:1px solid #ddd; padding:20px;">
+        <h3>Closed Jobs</h3>
+        <p>{{ closed_jobs }}</p>
+    </div>
+
+    <div style="border:1px solid #ddd; padding:20px;">
+        <h3>Total Applications</h3>
+        <p>{{ total_applications }}</p>
+    </div>
+
+</div>
+
+<hr>
+
+<h3>Recent Applications</h3>
+
+<table border="1" cellpadding="10">
+    <tr>
+        <th>Candidate</th>
+        <th>Job</th>
+        <th>Status</th>
+        <th>Applied Date</th>
+    </tr>
+
+    {% for app in recent_applications %}
+    <tr>
+        <td>{{ app.candidate.username }}</td>
+        <td>{{ app.job.title }}</td>
+        <td>{{ app.status }}</td>
+        <td>{{ app.applied_date }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="4">No applications yet.</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<h2>Recent Applicants</h2>
+
+{% for app in recent_applications %}
+<div class="recent-job-card">
+    <h3>{{ app.candidate.username }}</h3>
+
+    <p><strong>Applied for:</strong> {{ app.job.title }}</p>
+
+    <p><strong>Status:</strong> {{ app.status }}</p>
+
+    <a href="{% url 'candidate_profile' app.candidate.id %}"
+       class="btn btn-primary">
+        View Profile
+    </a>
+</div>
+
+<br>
+
+{% empty %}
+<p>No recent applicants yet.</p>
+{% endfor %}
