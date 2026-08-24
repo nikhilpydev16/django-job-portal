@@ -272,3 +272,25 @@ GitHub: \[nikhilpydev16](https://github.com/nikhilpydev16)
 
 
 
+
+
+\## Project Screenshots
+
+
+
+\### Home Page
+
+!\[Home Page](screenshots/home.png)
+
+
+
+\### Job Listings
+
+!\[Job Listings](screenshots/jobs.png)
+
+
+
+\### Login Page
+
+!\[Login Page](screenshots/login.png)
+
